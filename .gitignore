@@ -1,0 +1,6 @@
+# 忽略SSH密钥文件
+.ssh/
+*.pem
+*.key
+# 若私钥是其他名称（如github_key），直接写具体路径
+github_key
