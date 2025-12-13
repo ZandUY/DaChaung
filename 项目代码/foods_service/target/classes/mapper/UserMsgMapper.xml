@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.foods.dao.UserMsgMapper">
+  <resultMap id="BaseResultMap" type="com.foods.model.UserMsg">
+    <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+  <result column="password" property="password" jdbcType="VARCHAR" />
+  <result column="name" property="name" jdbcType="VARCHAR" />
+  <result column="celphone" property="celphone" jdbcType="VARCHAR" />
+  <result column="email" property="email" jdbcType="VARCHAR" />
+  <result column="sex" property="sex" jdbcType="INTEGER" />
+  <result column="sg" property="sg" jdbcType="INTEGER" />
+  <result column="weight" property="weight" jdbcType="DOUBLE" />
+  <result column="bmi" property="bmi" jdbcType="DOUBLE" />
+  <result column="age" property="age" jdbcType="VARCHAR" />
+  <result column="head_img" property="headImg" jdbcType="VARCHAR" />
+  <result column="zc_time" property="zcTime" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+     id,`login_name`,`password`,`name`,`celphone`,`email`,`sex`,`sg`,`weight`,`bmi`,`age`,`head_img`,`zc_time`
+  </sql>
+  <select id="selectByExample" parameterType="com.foods.model.UserMsgExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `user_msg`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+     <if test="startRow >= 0 and pageRows > 0">
+  limit ${startRow},${pageRows}
+  </if>
+
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+     from `user_msg`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+   delete from `user_msg`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.foods.model.UserMsgExample">
+    delete from `user_msg`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.foods.model.UserMsg">
+      <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  SELECT LAST_INSERT_ID()
+</selectKey>
+
+      insert into `user_msg` (`login_name`,`password`,`name`,`celphone`,`email`,`sex`,`sg`,`weight`,`bmi`,`age`,`head_img`,`zc_time`)
+      values (	#{id,jdbcType=INTEGER},	#{loginName,jdbcType=VARCHAR},	#{password,jdbcType=VARCHAR},	#{name,jdbcType=VARCHAR},	#{celphone,jdbcType=VARCHAR},	#{email,jdbcType=VARCHAR},	#{sex,jdbcType=INTEGER},	#{sg,jdbcType=INTEGER},	#{weight,jdbcType=DOUBLE},	#{bmi,jdbcType=DOUBLE},	#{age,jdbcType=VARCHAR},	#{headImg,jdbcType=VARCHAR},	#{zcTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.foods.model.UserMsg">
+   <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  SELECT LAST_INSERT_ID()
+</selectKey>
+
+    insert into `user_msg`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+	  `id`,
+ </if>
+<if test="loginName != null" >
+	  `login_name`,
+ </if>
+<if test="password != null" >
+	  `password`,
+ </if>
+<if test="name != null" >
+	  `name`,
+ </if>
+<if test="celphone != null" >
+	  `celphone`,
+ </if>
+<if test="email != null" >
+	  `email`,
+ </if>
+<if test="sex != null" >
+	  `sex`,
+ </if>
+<if test="sg != null" >
+	  `sg`,
+ </if>
+<if test="weight != null" >
+	  `weight`,
+ </if>
+<if test="bmi != null" >
+	  `bmi`,
+ </if>
+<if test="age != null" >
+	  `age`,
+ </if>
+<if test="headImg != null" >
+	  `head_img`,
+ </if>
+<if test="zcTime != null" >
+	  `zc_time`
+ </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+         <if test="id != null" >
+	 #{id,jdbcType=INTEGER},
+	 </if>
+  <if test="loginName != null" >
+	 #{loginName,jdbcType=VARCHAR},
+	 </if>
+  <if test="password != null" >
+	 #{password,jdbcType=VARCHAR},
+	 </if>
+  <if test="name != null" >
+	 #{name,jdbcType=VARCHAR},
+	 </if>
+  <if test="celphone != null" >
+	 #{celphone,jdbcType=VARCHAR},
+	 </if>
+  <if test="email != null" >
+	 #{email,jdbcType=VARCHAR},
+	 </if>
+  <if test="sex != null" >
+	 #{sex,jdbcType=INTEGER},
+	 </if>
+  <if test="sg != null" >
+	 #{sg,jdbcType=INTEGER},
+	 </if>
+  <if test="weight != null" >
+	 #{weight,jdbcType=DOUBLE},
+	 </if>
+  <if test="bmi != null" >
+	 #{bmi,jdbcType=DOUBLE},
+	 </if>
+  <if test="age != null" >
+	 #{age,jdbcType=VARCHAR},
+	 </if>
+  <if test="headImg != null" >
+	 #{headImg,jdbcType=VARCHAR},
+	 </if>
+  <if test="zcTime != null" >
+	 #{zcTime,jdbcType=VARCHAR},
+	 </if>
+
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.foods.model.UserMsgExample" resultType="java.lang.Long">
+    select count(*) from `user_msg`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update `user_msg`
+    <set>
+       <if test="record.loginName != null" >
+	 `login_name` = #{record.loginName,jdbcType=VARCHAR},
+</if>
+ <if test="record.password != null" >
+	 `password` = #{record.password,jdbcType=VARCHAR},
+</if>
+ <if test="record.name != null" >
+	 `name` = #{record.name,jdbcType=VARCHAR},
+</if>
+ <if test="record.celphone != null" >
+	 `celphone` = #{record.celphone,jdbcType=VARCHAR},
+</if>
+ <if test="record.email != null" >
+	 `email` = #{record.email,jdbcType=VARCHAR},
+</if>
+ <if test="record.sex != null" >
+	 `sex` = #{record.sex,jdbcType=INTEGER},
+</if>
+ <if test="record.sg != null" >
+	 `sg` = #{record.sg,jdbcType=INTEGER},
+</if>
+ <if test="record.weight != null" >
+	 `weight` = #{record.weight,jdbcType=DOUBLE},
+</if>
+ <if test="record.bmi != null" >
+	 `bmi` = #{record.bmi,jdbcType=DOUBLE},
+</if>
+ <if test="record.age != null" >
+	 `age` = #{record.age,jdbcType=VARCHAR},
+</if>
+ <if test="record.headImg != null" >
+	 `head_img` = #{record.headImg,jdbcType=VARCHAR},
+</if>
+ <if test="record.zcTime != null" >
+	 `zc_time` = #{record.zcTime,jdbcType=VARCHAR}
+</if>
+
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update `user_msg`
+    set 
+    				`login_name` = #{record.loginName,jdbcType=VARCHAR},	`password` = #{record.password,jdbcType=VARCHAR},	`name` = #{record.name,jdbcType=VARCHAR},	`celphone` = #{record.celphone,jdbcType=VARCHAR},	`email` = #{record.email,jdbcType=VARCHAR},	`sex` = #{record.sex,jdbcType=INTEGER},	`sg` = #{record.sg,jdbcType=INTEGER},	`weight` = #{record.weight,jdbcType=DOUBLE},	`bmi` = #{record.bmi,jdbcType=DOUBLE},	`age` = #{record.age,jdbcType=VARCHAR},	`head_img` = #{record.headImg,jdbcType=VARCHAR},	`zc_time` = #{record.zcTime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.foods.model.UserMsg">
+    update `user_msg`
+    <set>
+       <if test="loginName != null" >
+	 `login_name` = #{loginName,jdbcType=VARCHAR},
+</if>
+ <if test="password != null" >
+	 `password` = #{password,jdbcType=VARCHAR},
+</if>
+ <if test="name != null" >
+	 `name` = #{name,jdbcType=VARCHAR},
+</if>
+ <if test="celphone != null" >
+	 `celphone` = #{celphone,jdbcType=VARCHAR},
+</if>
+ <if test="email != null" >
+	 `email` = #{email,jdbcType=VARCHAR},
+</if>
+ <if test="sex != null" >
+	 `sex` = #{sex,jdbcType=INTEGER},
+</if>
+ <if test="sg != null" >
+	 `sg` = #{sg,jdbcType=INTEGER},
+</if>
+ <if test="weight != null" >
+	 `weight` = #{weight,jdbcType=DOUBLE},
+</if>
+ <if test="bmi != null" >
+	 `bmi` = #{bmi,jdbcType=DOUBLE},
+</if>
+ <if test="age != null" >
+	 `age` = #{age,jdbcType=VARCHAR},
+</if>
+ <if test="headImg != null" >
+	 `head_img` = #{headImg,jdbcType=VARCHAR},
+</if>
+ <if test="zcTime != null" >
+	 `zc_time` = #{zcTime,jdbcType=VARCHAR}
+</if>
+
+    </set>
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.foods.model.UserMsg">
+    update `user_msg`
+    set 
+     			`login_name` = #{loginName,jdbcType=VARCHAR},	`password` = #{password,jdbcType=VARCHAR},	`name` = #{name,jdbcType=VARCHAR},	`celphone` = #{celphone,jdbcType=VARCHAR},	`email` = #{email,jdbcType=VARCHAR},	`sex` = #{sex,jdbcType=INTEGER},	`sg` = #{sg,jdbcType=INTEGER},	`weight` = #{weight,jdbcType=DOUBLE},	`bmi` = #{bmi,jdbcType=DOUBLE},	`age` = #{age,jdbcType=VARCHAR},	`head_img` = #{headImg,jdbcType=VARCHAR},	`zc_time` = #{zcTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>
